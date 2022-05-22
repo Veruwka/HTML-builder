@@ -11,10 +11,6 @@ let rl = readline.createInterface({
     output: outputFile,    
 });
 
-rl.on('SIGINT', () => {
-    stdout.write('До новых встречь!!!');
-});
-
 rl.on('line', line => {
     if (line === 'exit') {
         rl.close();
@@ -22,4 +18,9 @@ rl.on('line', line => {
     } else {
         outputFile.write(line + '\n');
     }
+});
+
+process.on('SIGINT', () => {
+    stdout.write('До новых встречь!!!');
+    rl.close();
 });

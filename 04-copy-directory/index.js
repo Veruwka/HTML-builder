@@ -9,7 +9,7 @@ fs.mkdir(outputDir, { recursive: true }, (err) => {
     if (err) return console.log(err);
 });
 
-async function copyFiles(dir) {
+async function copyDir(dir) {
     let directory = await fs.promises.opendir(dir);
     for await (let file of directory) {
         let name = file.name;
@@ -22,4 +22,4 @@ async function copyFiles(dir) {
         })
     }
 }
-copyFiles(inputDir);
+copyDir(inputDir);

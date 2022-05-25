@@ -9,21 +9,20 @@ fs.mkdir(outputDir, { recursive: true }, (err) => {
     if (err) return console.log(err);
 });
 
-async function copyDir(dir) {
-    let directory = await fs.promises.opendir(dir);
-    let outDir = await fs.promises.opendir(outputDir);
+async function copyDir(dirIn, dirOut) {
+    let directory = await fs.promises.opendir(dirIn);
+    let directoryCopy = await fs.promises.opendir(dirOut);
 
-    for await (let fileCopy of outDir) {
-        let a = fileCopy.name;
-        fs.unlink(path.join(outputDir, a), (err) => {
+    for await (let fileCopy of directoryCopy) {
+        let nameCopy = fileCopy.name;
+        fs.unlink(path.join(dirOut, nameCopy), (err) => {
             if (err) console.log(err);
-            else console.log('file was deleted');
         });
     }
 
     for await (let file of directory) {
         let name = file.name;
-        fsPromises.copyFile(path.join(dir, name), path.join(outputDir, `copy-${name}`))
+        fsPromises.copyFile(path.join(dirIn, name), path.join(dirOut, `copy-${name}`))
         .then (function () {
             console.log('File was copied)');
         })
@@ -32,4 +31,4 @@ async function copyDir(dir) {
         })
     }
 }
-copyDir(inputDir);
+copyDir(inputDir, outputDir);

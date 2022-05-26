@@ -22,7 +22,7 @@ async function copyDir(dirIn, dirOut) {
 
     for await (let file of directory) {
         let name = file.name;
-        fsPromises.copyFile(path.join(dirIn, name), path.join(dirOut, `copy-${name}`))
+        fsPromises.copyFile(path.join(dirIn, name), path.join(dirOut, name))
         .then (function () {
             console.log('File was copied)');
         })
